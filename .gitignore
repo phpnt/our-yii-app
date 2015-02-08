@@ -1,0 +1,28 @@
+# phpstorm файлы проекта
+.idea
+
+# netbeans файлы проекта
+nbproject
+
+# zend studio for eclipse файлы проекта
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# папка приложений, загруженных через Composer
+/vendor
+
+# сам Composer, если он в корне
+composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+# файл phpunit тестов
+phpunit.phar
+
+# local phpunit config
+/phpunit.xml
