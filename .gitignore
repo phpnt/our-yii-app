@@ -1,3 +1,6 @@
+# исключаем db.php
+/config/db.php
+
 # phpstorm файлы проекта
 .idea
 
