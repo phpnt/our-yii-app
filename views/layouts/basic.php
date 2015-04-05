@@ -31,7 +31,21 @@ $this->beginPage();
         <?php
         NavBar::begin(
             [
-                'brandLabel' => 'Тестовое приложение'
+                'options' => [
+                    'class' => 'navbar',
+                    'id' => 'main-menu'
+                ],
+                'renderInnerContainer' => true,
+                'innerContainerOptions' => [
+                    'class' => 'container'
+                ],
+                'brandLabel' => '<img src="img/brand.gif"/>',
+                'brandUrl' => [
+                    'main/index'
+                ],
+                'brandOptions' => [
+                    'class' => 'navbar-brand'
+                ]
             ]
         );
         ActiveForm::begin(
@@ -65,10 +79,6 @@ $this->beginPage();
 
         echo Nav::widget([
             'items' => [
-                [
-                    'label' => 'Главная <span class="glyphicon glyphicon-home"></span>',
-                    'url' => ['main/index']
-                ],
                 [
                     'label' => 'Из коробки <span class="glyphicon glyphicon-inbox"></span>',
                     'items' => [
