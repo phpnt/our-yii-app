@@ -39,7 +39,7 @@ $this->beginPage();
                 'innerContainerOptions' => [
                     'class' => 'container'
                 ],
-                'brandLabel' => '<img src="img/brand.gif"/>',
+                'brandLabel' => '<img src="'.\Yii::$app->request->BaseUrl.'/img/brand.gif"/>',
                 'brandUrl' => [
                     'main/index'
                 ],
@@ -50,7 +50,7 @@ $this->beginPage();
         );
         ActiveForm::begin(
             [
-                'action' => ['main/search'],
+                'action' => ['/найти'],
                 'method' => 'get',
                 'options' => [
                     'class' => 'navbar-form navbar-right'
@@ -71,7 +71,8 @@ $this->beginPage();
         echo Html::submitButton(
             '<span class="glyphicon glyphicon-search"></span>',
             [
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-success',
+                'onClick' => 'window.location.href = this.form.action + "-" + this.form.search.value.replace(/[^\w\а-яё\А-ЯЁ]+/g, "_") + ".html";'
             ]
         );
         echo '</span></div>';
@@ -90,12 +91,19 @@ $this->beginPage();
                         ]
                     ]
                 ],
-                '<li>
-                    <a data-toggle="modal" data-target="#modal" style="cursor: pointer">
-                        О проекте <span class="glyphicon glyphicon-question-sign"></span>
-                    </a>
-                </li>'
+                [
+                    'label' => 'О проекте <span class="glyphicon glyphicon-question-sign"></span>',
+                    'url' => [
+                        '#'
+                    ],
+                    'linkOptions' => [
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal',
+                        'style' => 'cursor: pointer; outline: none;'
+                    ],
+                ],
             ],
+            'activateParents' => true,
             'encodeLabels' => false,
             'options' => [
                 'class' => 'navbar-nav navbar-right'
