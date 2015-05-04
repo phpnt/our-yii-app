@@ -49,6 +49,54 @@ $this->beginPage();
                 ]
             ]
         );
+
+        echo Nav::widget([
+            'items' => [
+                [
+                    'label' => 'Из коробки <span class="glyphicon glyphicon-inbox"></span>',
+                    'items' => [
+                        '<li class="dropdown-header">Расширения</li>',
+                        '<li class="divider"></li>',
+                        [
+                            'label' => 'Перейти к просмотру',
+                            'url' => ['widget-test/index']
+                        ]
+                    ]
+                ],
+                [
+                    'label' => 'О проекте <span class="glyphicon glyphicon-question-sign"></span>',
+                    'url' => [
+                        '#'
+                    ],
+                    'linkOptions' => [
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal',
+                        'style' => 'cursor: pointer; outline: none;'
+                    ],
+                ],
+                [
+                    'label' => 'Регистрация',
+                    'url' => ['main/reg']
+                ],
+                [
+                    'label' => 'Войти',
+                    'url' => ['main/login']
+                ]
+            ],
+            'activateParents' => true,
+            'encodeLabels' => false,
+            'options' => [
+                'class' => 'navbar-nav navbar-right'
+            ]
+        ]);
+
+        Modal::begin([
+            'header' => '<h2>phpNT</h2>',
+            'id' => 'modal'
+        ]);
+        echo 'Проект для продвинутых PHP разработчиков.';
+        Modal::end();
+
         ActiveForm::begin(
             [
                 'action' => ['/найти'],
@@ -78,45 +126,6 @@ $this->beginPage();
         );
         echo '</span></div>';
         ActiveForm::end();
-
-        echo Nav::widget([
-            'items' => [
-                [
-                    'label' => 'Из коробки <span class="glyphicon glyphicon-inbox"></span>',
-                    'items' => [
-                        '<li class="dropdown-header">Расширения</li>',
-                        '<li class="divider"></li>',
-                        [
-                            'label' => 'Перейти к просмотру',
-                            'url' => ['widget-test/index']
-                        ]
-                    ]
-                ],
-                [
-                    'label' => 'О проекте <span class="glyphicon glyphicon-question-sign"></span>',
-                    'url' => [
-                        '#'
-                    ],
-                    'linkOptions' => [
-                        'data-toggle' => 'modal',
-                        'data-target' => '#modal',
-                        'style' => 'cursor: pointer; outline: none;'
-                    ],
-                ],
-            ],
-            'activateParents' => true,
-            'encodeLabels' => false,
-            'options' => [
-                'class' => 'navbar-nav navbar-right'
-            ]
-        ]);
-
-        Modal::begin([
-            'header' => '<h2>phpNT</h2>',
-            'id' => 'modal'
-        ]);
-        echo 'Проект для продвинутых PHP разработчиков.';
-        Modal::end();
 
         NavBar::end();
         ?>
