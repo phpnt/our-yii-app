@@ -1,4 +1,12 @@
 /* pnpNT CSS file */
+@media (max-width: 767px) {
+    .dropdown-header {
+        color: #fff;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #fff;
+    }
+}
 #main-menu.navbar-default .navbar-brand {
     color: rgba(255, 255, 255, 1);
 }
@@ -37,3 +45,6 @@
 #main-menu.navbar-default .navbar-toggle:focus .icon-bar {
     background-color: #fff;
 }
+
+
+
