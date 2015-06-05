@@ -6,6 +6,9 @@
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
         color: #fff;
     }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+        color: rgba(195, 212, 227, 1);
+    }
 }
 #main-menu.navbar-default .navbar-brand {
     color: rgba(255, 255, 255, 1);
