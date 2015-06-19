@@ -4,6 +4,7 @@ namespace app\controllers;
 use Yii;
 use app\models\RegForm;
 use app\models\LoginForm;
+use app\models\User;
 
 class MainController extends \yii\web\Controller
 {
@@ -26,8 +27,12 @@ class MainController extends \yii\web\Controller
         $model = new RegForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()):
-            if ($model->reg()):
-                return $this->goHome();
+            if ($user = $model->reg()):
+                if ($user->status === User::STATUS_ACTIVE):
+                    if (Yii::$app->getUser()->login($user)):
+                        return $this->goHome();
+                    endif;
+                endif;
             else:
                 Yii::$app->session->setFlash('error', 'Возникла ошибка при регистрации.');
                 Yii::error('Ошибка при регистрации');
@@ -43,8 +48,18 @@ class MainController extends \yii\web\Controller
         );
     }
 
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->redirect(['/main/index']);
+    }
+
     public function actionLogin()
     {
+        if (!Yii::$app->user->isGuest):
+            return $this->goHome();
+        endif;
+
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()):

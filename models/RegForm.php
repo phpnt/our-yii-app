@@ -23,6 +23,7 @@ class RegForm extends Model
             [['username', 'email', 'password'],'filter', 'filter' => 'trim'],
             [['username', 'email', 'password'],'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['password', 'string', 'min' => 6, 'max' => 255],
             ['username', 'unique',
                 'targetClass' => User::className(),
                 'message' => 'Это имя уже занято.'],
@@ -49,6 +50,12 @@ class RegForm extends Model
 
     public function reg()
     {
-        return true;
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->status = $this->status;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+        return $user->save() ? $user : null;
     }
 }
