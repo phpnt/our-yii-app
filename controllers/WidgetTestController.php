@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-class WidgetTestController extends \yii\web\Controller
+class WidgetTestController extends BehaviorsController
 {
     public function actionIndex()
     {
