@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use app\components\AlertWidget;
+use yii\helpers\Url;
 /**
  * Created by PhpStorm.
  * User: phpNT
@@ -50,7 +51,23 @@ $this->beginPage();
                 ]
             ]
         );
-
+        if (!Yii::$app->user->isGuest):
+            ?>
+            <div class="navbar-form navbar-right">
+                <button class="btn btn-sm btn-default"
+                        data-container="body"
+                        data-toggle="popover"
+                        data-trigger="focus"
+                        data-placement="bottom"
+                        data-title="<?= Yii::$app->user->identity['username'] ?>"
+                        data-content="
+                            <a href='<?= Url::to(['/main/logout']) ?>' data-method='post'>Выход</a>
+                        ">
+                    <span class="glyphicon glyphicon-user"></span>
+                </button>
+            </div>
+        <?php
+        endif;
         $menuItems = [
             [
                 'label' => 'Из коробки <span class="glyphicon glyphicon-inbox"></span>',
@@ -84,14 +101,6 @@ $this->beginPage();
             $menuItems[] = [
                 'label' => 'Войти',
                 'url' => ['/main/login']
-            ];
-        else:
-            $menuItems[] = [
-                'label' => 'Выйти ('.Yii::$app->user->identity['username'].')',
-                'url' => ['/main/logout'],
-                'linkOptions' => [
-                    'data-method' => 'post'
-                ]
             ];
         endif;
 
