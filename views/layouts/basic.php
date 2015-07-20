@@ -61,6 +61,7 @@ $this->beginPage();
                         data-placement="bottom"
                         data-title="<?= Yii::$app->user->identity['username'] ?>"
                         data-content="
+                            <a href='<?= Url::to(['/main/profile']) ?>' data-method='post'>Мой профиль</a><br>
                             <a href='<?= Url::to(['/main/logout']) ?>' data-method='post'>Выход</a>
                         ">
                     <span class="glyphicon glyphicon-user"></span>

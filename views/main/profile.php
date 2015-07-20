@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'middle_name') ?>
     
         <div class="form-group">
-            <?= Html::submitButton('Изменить', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary']) ?>
         </div>
     <?php ActiveForm::end(); ?>
 

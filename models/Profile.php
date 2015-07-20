@@ -46,12 +46,12 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User ID',
-            'avatar' => 'Avatar',
-            'first_name' => 'First Name',
-            'second_name' => 'Second Name',
-            'middle_name' => 'Middle Name',
-            'birthday' => 'Birthday',
-            'gender' => 'Gender',
+            'avatar' => 'Аватар',
+            'first_name' => 'Имя',
+            'second_name' => 'Фамилия',
+            'middle_name' => 'Отчество',
+            'birthday' => 'Дата рождения',
+            'gender' => 'Пол',
         ];
     }
 
@@ -61,5 +61,15 @@ class Profile extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function updateProfile()
+    {
+        $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
+        $profile->user_id = Yii::$app->user->id;
+        $profile->first_name = $this->first_name;
+        $profile->second_name = $this->second_name;
+        $profile->middle_name = $this->middle_name;
+        return $profile->save() ? true : false;
     }
 }

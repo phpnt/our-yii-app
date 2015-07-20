@@ -17,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_at
+ *
  * @property Profile $profile
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
@@ -57,13 +58,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'Ник',
             'email' => 'Email',
             'password' => 'Password Hash',
-            'status' => 'Status',
+            'status' => 'Статус',
             'auth_key' => 'Auth Key',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата изменения',
         ];
     }
 
