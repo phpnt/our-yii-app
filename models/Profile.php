@@ -70,6 +70,12 @@ class Profile extends \yii\db\ActiveRecord
         $profile->first_name = $this->first_name;
         $profile->second_name = $this->second_name;
         $profile->middle_name = $this->middle_name;
-        return $profile->save() ? true : false;
+        if($profile->save()):
+            $user = $this->user ? $this->user : User::findOne(Yii::$app->user->id);
+            $username = Yii::$app->request->post('User')['username'];
+            $user->username = isset($username) ? $username : $user->username;
+            return $user->save() ? true : false;
+        endif;
+        return false;
     }
 }

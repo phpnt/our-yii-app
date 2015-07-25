@@ -97,8 +97,11 @@ class MainController extends BehaviorsController
         );
     }
 
-    public function actionSearch($search = null)
+    public function actionSearch()
     {
+        $search = Yii::$app->session->get('search');
+        Yii::$app->session->remove('search');
+
         if ($search):
             Yii::$app->session->setFlash(
                 'success',
