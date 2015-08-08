@@ -35,7 +35,7 @@ $this->beginPage();
         NavBar::begin(
             [
                 'options' => [
-                    'class' => 'navbar',
+                    'class' => 'navbar navbar-default',
                     'id' => 'main-menu'
                 ],
                 'renderInnerContainer' => true,

@@ -6,6 +6,10 @@ use app\models\RegForm;
 use app\models\LoginForm;
 use app\models\User;
 use app\models\Profile;
+use app\models\SendEmailForm;
+use app\models\ResetPasswordForm;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
 
 class MainController extends BehaviorsController
 {
@@ -120,5 +124,46 @@ class MainController extends BehaviorsController
                 'search' => $search
             ]
         );
+    }
+
+    public function actionSendEmail()
+    {
+        $model = new SendEmailForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if($model->sendEmail()):
+                    Yii::$app->getSession()->setFlash('warning', 'Проверьте емайл.');
+                    return $this->goHome();
+                else:
+                    Yii::$app->getSession()->setFlash('error', 'Нельзя сбросить пароль.');
+                endif;
+            }
+        }
+
+        return $this->render('sendEmail', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionResetPassword($key)
+    {
+        try {
+            $model = new ResetPasswordForm($key);
+        }
+        catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate() && $model->resetPassword()) {
+                Yii::$app->getSession()->setFlash('warning', 'Пароль изменен.');
+                return $this->redirect(['/main/login']);
+            }
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
     }
 }

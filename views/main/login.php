@@ -20,4 +20,6 @@ use yii\widgets\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 
+    <?= Html::a('Забыли пароль?', ['/main/send-email']) ?>
+
 </div><!-- main-login -->

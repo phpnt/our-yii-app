@@ -17,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $secret_key
  *
  * @property Profile $profile
  */
@@ -47,7 +48,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['password', 'required', 'on' => 'create'],
             ['username', 'unique', 'message' => 'Это имя занято.'],
-            ['email', 'unique', 'message' => 'Эта почта уже зарегистрирована.']
+            ['email', 'unique', 'message' => 'Эта почта уже зарегистрирована.'],
+            ['secret_key', 'unique']
         ];
     }
 
@@ -94,7 +96,40 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         ]);
     }
 
+    public static function findBySecretKey($key)
+    {
+        if (!static::isSecretKeyExpire($key))
+        {
+            return null;
+        }
+        return static::findOne([
+            'secret_key' => $key,
+        ]);
+    }
+
     /* Хелперы */
+    public function generateSecretKey()
+    {
+        $this->secret_key = Yii::$app->security->generateRandomString().'_'.time();
+    }
+
+    public function removeSecretKey()
+    {
+        $this->secret_key = null;
+    }
+
+    public static function isSecretKeyExpire($key)
+    {
+        if (empty($key))
+        {
+            return false;
+        }
+        $expire = Yii::$app->params['secretKeyExpire'];
+        $parts = explode('_', $key);
+        $timestamp = (int) end($parts);
+
+        return $timestamp + $expire >= time();
+    }
 
     /**
      * Генерирует хеш из введенного пароля и присваивает (при записи) полученное значение полю password_hash таблицы user для
