@@ -36,6 +36,7 @@ class RegForm extends Model
                 User::STATUS_NOT_ACTIVE,
                 User::STATUS_ACTIVE
             ]],
+            ['status', 'default', 'value' => User::STATUS_NOT_ACTIVE, 'on' => 'emailActivation'],
         ];
     }
 
@@ -56,6 +57,17 @@ class RegForm extends Model
         $user->status = $this->status;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        if($this->scenario === 'emailActivation')
+            $user->generateSecretKey();
         return $user->save() ? $user : null;
+    }
+
+    public function sendActivationEmail($user)
+    {
+        return Yii::$app->mailer->compose('activationEmail', ['user' => $user])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name.' (отправлено роботом).'])
+            ->setTo($this->email)
+            ->setSubject('Активация для '.Yii::$app->name)
+            ->send();
     }
 }

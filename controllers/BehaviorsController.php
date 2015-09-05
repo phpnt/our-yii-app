@@ -27,7 +27,7 @@ class BehaviorsController extends Controller {
                     [
                         'allow' => true,
                         'controllers' => ['main'],
-                        'actions' => ['reg', 'login'],
+                        'actions' => ['reg', 'login', 'activate-account'],
                         'verbs' => ['GET', 'POST'],
                         'roles' => ['?']
                     ],

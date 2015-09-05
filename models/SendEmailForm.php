@@ -52,7 +52,7 @@ class SendEmailForm extends Model
             $user->generateSecretKey();
             if($user->save()):
                 return Yii::$app->mailer->compose('resetPassword', ['user' => $user])
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name.' (отправленно роботом)'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name.' (отправлено роботом)'])
                     ->setTo($this->email)
                     ->setSubject('Сброс пароля для '.Yii::$app->name)
                     ->send();
