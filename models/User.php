@@ -96,6 +96,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         ]);
     }
 
+    /* Находит пользователя по емайл */
+    public static function findByEmail($email)
+    {
+        return static::findOne([
+            'email' => $email
+        ]);
+    }
+
     public static function findBySecretKey($key)
     {
         if (!static::isSecretKeyExpire($key))

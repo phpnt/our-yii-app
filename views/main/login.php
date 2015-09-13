@@ -11,7 +11,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username') ?>
+    <?php if($model->scenario === 'loginWithEmail'): ?>
+        <?= $form->field($model, 'email') ?>
+    <?php else: ?>
+        <?= $form->field($model, 'username') ?>
+    <?php endif; ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
 

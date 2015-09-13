@@ -24,6 +24,7 @@ class LoginForm extends Model
     {
         return [
             [['username', 'password'], 'required', 'on' => 'default'],
+            [['email', 'password'], 'required', 'on' => 'loginWithEmail'],
             ['email', 'email'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword']
@@ -34,10 +35,9 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()):
             $user = $this->getUser();
-            if (
-                !$user ||
-                !$user->validatePassword($this->password)):
-                $this->addError($attribute, 'Неправильное имя пользователя или пароль.');
+            if (!$user || !$user->validatePassword($this->password)):
+                $field = ($this->scenario === 'loginWithEmail') ? 'email' : 'username';
+                $this->addError($attribute, 'Неправильный '.$field.' или пароль.');
             endif;
         endif;
     }
@@ -45,7 +45,11 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false):
-            $this->_user = User::findByUsername($this->username);
+            if($this->scenario === 'loginWithEmail'):
+                $this->_user = User::findByEmail($this->email);
+            else:
+                $this->_user = User::findByUsername($this->username);
+            endif;
         endif;
         return $this->_user;
     }
@@ -53,7 +57,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'Имя пользователя',
+            'username' => 'Ник',
+            'email' => 'Емайл',
             'password' => 'Пароль',
             'rememberMe' => 'Запомнить меня'
         ];

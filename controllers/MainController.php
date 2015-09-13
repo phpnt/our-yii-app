@@ -118,7 +118,9 @@ class MainController extends BehaviorsController
             return $this->goHome();
         endif;
 
-        $model = new LoginForm();
+        $loginWithEmail = Yii::$app->params['loginWithEmail'];
+
+        $model = $loginWithEmail ? new LoginForm(['scenario' => 'loginWithEmail']) : new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()):
             return $this->goBack();
